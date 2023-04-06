@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qzt.module.system.mapper.SysSmsSendLogMapper">
+
+    <resultMap type="SysSmsSendLog" id="SysSmsSendLogResult">
+        <result property="id"    column="id"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="content"    column="content"    />
+        <result property="scene"    column="scene"    />
+        <result property="createIp"    column="create_ip"    />
+        <result property="todayIndex"    column="today_index"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updater"    column="updater"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectSysSmsSendLogVo">
+        select id, mobile, content, scene, create_ip, today_index, creator, create_time, updater, update_time from sys_sms_send_log
+    </sql>
+
+    <select id="selectList" parameterType="SysSmsSendLog" resultMap="SysSmsSendLogResult">
+        <include refid="selectSysSmsSendLogVo"/>
+        <where>
+            <if test="mobile != null  and mobile != ''"> and mobile = #{mobile}</if>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="Long" resultMap="SysSmsSendLogResult">
+        <include refid="selectSysSmsSendLogVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectLastByMobile" parameterType="Long" resultMap="SysSmsSendLogResult">
+        <include refid="selectSysSmsSendLogVo"/>
+        where mobile = #{mobile}
+        order by id desc
+        limit 1
+    </select>
+
+    <insert id="save" parameterType="SysSmsSendLog" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_sms_send_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mobile != null and mobile != ''">mobile,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="scene != null">scene,</if>
+            <if test="createIp != null and createIp != ''">create_ip,</if>
+            <if test="todayIndex != null">today_index,</if>
+            <if test="creator != null">creator,</if>
+            <if test="createTime != null and createTime != ''">create_time,</if>
+            <if test="updater != null">updater,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mobile != null and mobile != ''">#{mobile},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="scene != null">#{scene},</if>
+            <if test="createIp != null and createIp != ''">#{createIp},</if>
+            <if test="todayIndex != null">#{todayIndex},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="createTime != null and createTime != ''">#{createTime},</if>
+            <if test="updater != null">#{updater},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+</mapper>

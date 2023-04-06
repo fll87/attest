@@ -1,0 +1,5 @@
+# Project exclude paths
+/attest-common/target/
+/attest-framework/target/
+/attest-module/target/
+/attest-server/target/
